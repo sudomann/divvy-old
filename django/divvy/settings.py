@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # Local Apps (This project's apps, created by us)
-    'api'
+    'api',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +58,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'divvy.urls'
+AUTH_USER_MODEL = 'users.CustomUser'
 
 TEMPLATES = [
     {
