@@ -1,5 +1,7 @@
 from django.contrib.auth.base_user import BaseUserManager
+from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext_lazy as _
+from . import models
 
 
 class CustomUserManager(BaseUserManager):
@@ -14,10 +16,15 @@ class CustomUserManager(BaseUserManager):
         """
         if not email:
             raise ValueError(_('The Email must be set'))
+        
         email = self.normalize_email(email)
-        user = self.model(email=email,
-                          domain=email.partition('@')[2],
-                          ** extra_fields)
+        email_domain = email.partition('@')[2]
+        domain_instance = Domain.objects.get(fqdn=email_domain)
+        
+        if not domain_instance:
+            raise ValueError(_('The Domain {} is unsupported'.format(email_domain)))
+        
+        user = self.model(email=email, domain=domain_instance, ** extra_fields)
         user.set_password(password)
         user.save()
         return user
