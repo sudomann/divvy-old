@@ -25,27 +25,26 @@ class Domain(models.Model):
                                 ]
                                 )
     details = models.CharField(max_length=100)
-    available_zones = models.ManyToManyField(Zone)
+    available_zones = models.ManyToManyField(Zone, blank=True)
 
 
 class CustomUser(AbstractUser):
 
     def clean_fields(self, exclude=None):
-        super().clean_fields(exclude=exclude)
-        # for some reason, causes: CommandError: This field cannot be blank.; This field cannot be null.
 
-        # automatically set `domain` ForeignKey to existing Domain record; raise error if nonexistent
-        
+        super().clean_fields(exclude=exclude)
+
         email_hostname = self.email.partition('@')[2]
+        # automatically set `domain` ForeignKey to existing Domain record
+        # Raises ValidationError if nonexistent
         try:
             self.domain = Domain.objects.get(hostname=email_hostname)
         except:  # models.Domain.DoesNotExist:
             raise ValidationError({'domain':
-                                   _('\"{}\" emails are not supported on this service.'.format(email_hostname))
+                                   _('\"{}\" emails are not supported on this service.'.format(
+                                       email_hostname))
                                    }
                                   )
-        
-        
 
     FEMALE = 'F'
     MALE = 'M'

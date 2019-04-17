@@ -11,20 +11,18 @@ class CustomUserManager(BaseUserManager):
     """
 
     def create_user(self, email, password, **extra_fields):
-        #import pdb; pdb.set_trace();
         """
         Create and save a User with the given email and password.
         """
         if not email:
             raise ValueError(_('The Email must be set'))
-            
+
         email = self.normalize_email(email)
-        #extra_fields['domain'] = None # add 'domain' to field list for validation
 
         user = self.model(email=email, **extra_fields)
         
         user.set_password(password)
-        user.full_clean() # FAILING TO SET DOMAIN PROPERLY AROUND HERE
+        user.full_clean(exclude=['domain']) # automatically set in CustomUser model
         
         user.save()
         return user
