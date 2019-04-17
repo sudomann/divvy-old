@@ -1,5 +1,16 @@
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+media
+
+django/staticfiles/
+
+### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files
-**__pycache__/
 *.py[cod]
 *$py.class
 
@@ -52,12 +63,8 @@ coverage.xml
 
 # Translations
 *.mo
-*.pot
 
 # Django stuff:
-*.log
-local_settings.py
-# db.sqlite3 We'll use this till we switch to a proper DB
 
 # Flask stuff:
 instance/
