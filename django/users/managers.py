@@ -1,4 +1,5 @@
 from django.contrib.auth.base_user import BaseUserManager
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from . import models
 
@@ -10,29 +11,21 @@ class CustomUserManager(BaseUserManager):
     """
 
     def create_user(self, email, password, **extra_fields):
+        #import pdb; pdb.set_trace();
         """
         Create and save a User with the given email and password.
         """
         if not email:
             raise ValueError(_('The Email must be set'))
-        
+            
         email = self.normalize_email(email)
+        #extra_fields['domain'] = None # add 'domain' to field list for validation
 
-        '''
-        email_domain = email.partition('@')[2]
-        
-        
-        user = None
-        try:
-            # lookup might fail when no matches are found
-            domain_instance = models.Domain.objects.get(fqdn=email_domain)
-            user = self.model(email=email, domain=domain_instance, **extra_fields)
-        except models.Domain.DoesNotExist:
-            user = self.model(email=email, domain=None, **extra_fields)
-        '''
         user = self.model(email=email, **extra_fields)
-        user.full_clean()
+        
         user.set_password(password)
+        user.full_clean() # FAILING TO SET DOMAIN PROPERLY AROUND HERE
+        
         user.save()
         return user
 

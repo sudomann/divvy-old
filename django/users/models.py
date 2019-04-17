@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.gis.db import models
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -15,21 +16,36 @@ class Zone(models.Model):
 
 
 class Domain(models.Model):
-    hostname = models.URLField(max_length=30, unique=True) # wrong validator being used here
-    # URLField is only good for properly formed urls, e.g. https://example.com
+    hostname = models.CharField(max_length=30,
+                                unique=True,
+                                validators=[
+                                    RegexValidator(regex='^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$',
+                                                   message="Invalid hostname"
+                                                   )
+                                ]
+                                )
     details = models.CharField(max_length=100)
     available_zones = models.ManyToManyField(Zone)
 
 
 class CustomUser(AbstractUser):
 
-    def clean(self):
+    def clean_fields(self, exclude=None):
+        super().clean_fields(exclude=exclude)
+        # for some reason, causes: CommandError: This field cannot be blank.; This field cannot be null.
 
+        # automatically set `domain` ForeignKey to existing Domain record; raise error if nonexistent
+        
+        email_hostname = self.email.partition('@')[2]
         try:
-            email_hostname = self.email.partition('@')[2]
-            self.domain = models.Domain.objects.get(hostname=email_hostname)
-        except: # models.Domain.DoesNotExist:
-            raise ValidationError(_('{} emails are not permitted to use this service.'.format(email_hostname)))
+            self.domain = Domain.objects.get(hostname=email_hostname)
+        except:  # models.Domain.DoesNotExist:
+            raise ValidationError({'domain':
+                                   _('\"{}\" emails are not supported on this service.'.format(email_hostname))
+                                   }
+                                  )
+        
+        
 
     FEMALE = 'F'
     MALE = 'M'
@@ -50,7 +66,7 @@ class CustomUser(AbstractUser):
     gender = models.CharField(
         max_length=1,
         choices=GENDER_CHOICES,
-        default=UNSPECIFIED,
+        default=UNSPECIFIED
     )
     domain = models.ForeignKey(Domain, on_delete=models.PROTECT)
 
@@ -61,6 +77,7 @@ class CustomUser(AbstractUser):
         'phone',
         'is_minor',
         'gender',
+
     ]
 
     objects = CustomUserManager()
