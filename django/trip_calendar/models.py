@@ -18,8 +18,8 @@ class Vehicle(models.Model):
 
 
 class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.PROTECT)
     content = models.CharField(max_length=100)
-    member = models.ForeignKey(User, on_delete=models.PROTECT)
     created_time = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     deleted = models.BooleanField(default=False)
