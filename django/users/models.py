@@ -85,7 +85,7 @@ class CustomUser(AbstractUser):
         return self.email
 
 class Contact(models.Model):
-    
+    added_by = models.ForeignKey(CustomUser, null=True, on_delete=models.PROTECT)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=150)
     email = models.EmailField(_('email address'), unique=True)
