@@ -46,8 +46,14 @@ INSTALLED_APPS = [
 
     # Local Apps (This project's apps, created by us)
     'api',
-    'users',
+    'comment_thread',
+    'contact_management',
+    'domain_management',
+    'live_tracker',
     'trip_calendar',
+    'users',
+    'vehicle_management',
+    'zone_management',
 ]
 
 MIDDLEWARE = [
