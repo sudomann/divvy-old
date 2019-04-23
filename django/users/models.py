@@ -1,31 +1,10 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.contrib.gis.db import models
 from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator
+from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
-
+from domain_management.models import Domain
 from .managers import CustomUserManager
-
-
-class Zone(models.Model):
-    title = models.CharField(max_length=20)
-    details = models.CharField(max_length=100)
-    location = models.PointField(unique=True)
-
-
-class Domain(models.Model):
-    hostname = models.CharField(max_length=30,
-                                unique=True,
-                                validators=[
-                                    RegexValidator(regex='^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$',
-                                                   message="Invalid hostname"
-                                                   )
-                                ]
-                                )
-    details = models.CharField(max_length=100)
-    available_zones = models.ManyToManyField(Zone, blank=True)
 
 
 class CustomUser(AbstractUser):
@@ -83,14 +62,3 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
-
-class Contact(models.Model):
-    added_by = models.ForeignKey(CustomUser, null=True, on_delete=models.PROTECT)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=150)
-    email = models.EmailField(_('email address'), unique=True)
-    phone = PhoneNumberField()
-    is_minor = models.BooleanField(default=True)
-
-    def __str__(self):
-            return '%s %s, %s' % (self.first_name, self.last_name, self.email)
