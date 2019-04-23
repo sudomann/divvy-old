@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # Third-Party Apps
     'phonenumber_field',
     'rest_framework',
+    'django_extensions', # for producing graphical representation of application
 
     # Local Apps (This project's apps, created by us)
     'api',
