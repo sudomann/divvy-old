@@ -8,20 +8,30 @@ User = get_user_model
 
 
 class UserSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(
-        required=True,
-        validators=[UniqueValidator(queryset=User.objects.all())]
-    )
-    username = serializers.CharField(
-        validators=[UniqueValidator(queryset=User.objects.all())]
-    )
-    password = serializers.CharField(min_length=8)
-
-    def create(self, validated_data):
-        user = User.objects.create_user(validated_data['username'], validated_data['email'],
-                                        validated_data['password'])
-        return user
-
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password')
+        fields = ('id',
+                  'email',
+                  'password',
+                  'first_name',
+                  'last_name',
+                  'phone',
+                  'is_minor',
+                  'gender')
+        write_only_fields = ('password',)
+        read_only_fields = ('id',)
+
+    def create(self, validated_data):
+        user = User.objects.create(
+            email=validated_data['email'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
+            phone=validated_data['phone'],
+            is_minor=validated_data['is_minor'],
+            gender=validated_data['is_minor']
+        )
+
+        user.set_password(validated_data['password'])
+        user.save()
+
+        return user
