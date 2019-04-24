@@ -9,7 +9,7 @@ def is_hostname_supported(email):
 
     if not Domain.objects.filter(hostname=email_hostname).exists():
         raise ValidationError(
-            _("'{}'. Your school is not supported on this service.".format(
+            _("\"{}\". Your school is not supported on this service.".format(
                 email_hostname))
         )
     else:
