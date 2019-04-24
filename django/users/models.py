@@ -10,9 +10,10 @@ from .managers import CustomUserManager
 
 
 class CustomUser(AbstractUser):
-
+    
+    # Raise field-specific validation errors if those 
+    # fields don’t appear in a ModelForm
     def clean_fields(self, exclude=None):
-
         super().clean_fields(exclude=exclude)
 
         email_hostname = self.email.partition('@')[2]
@@ -26,6 +27,7 @@ class CustomUser(AbstractUser):
                                        email_hostname))
                                    }
                                   )
+        
 
     FEMALE = 'F'
     MALE = 'M'
