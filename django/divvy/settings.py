@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.sites', # for django-rest-auth[with_social]
+    'django.contrib.sites',  # for django-rest-auth[with_social]
     'django.contrib.staticfiles',
 
     # Third-Party Apps
@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
-    'django_extensions', # for producing graphical representation of application
+    'django_extensions',  # for producing graphical representation of application
 
     # Local Apps (This project's apps, created by us)
     'api',
@@ -62,9 +62,6 @@ INSTALLED_APPS = [
     'vehicle_management',
     'zone_management',
 ]
-
-SITE_ID = 1
-REST_USE_JWT = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -149,3 +146,14 @@ STATIC_URL = '/static/'
 
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'US'
+
+REST_AUTH_SERIALIZERS = {
+    'LOGIN_SERIALIZER': 'users.serializers.UserLoginSerializer',
+}
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'users.serializers.UserRegisterSerializer',
+}
+
+SITE_ID = 1
+REST_USE_JWT = True
