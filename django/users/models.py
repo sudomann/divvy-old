@@ -57,7 +57,6 @@ class CustomUser(AbstractUser):
         'phone',
         'is_minor',
         'gender',
-
     ]
 
     objects = CustomUserManager()
