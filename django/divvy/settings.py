@@ -38,17 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.sites',  # for django-rest-auth[with_social]
     'django.contrib.staticfiles',
 
     # Third-Party Apps
-    'allauth',
-    'allauth.account',
     'rest_auth.registration',
     'phonenumber_field',
     'rest_framework',
-    'rest_framework.authtoken',
-    'rest_auth',
+    'djoser',
     'django_extensions',  # for producing graphical representation of application
 
     # Local Apps (This project's apps, created by us)
@@ -146,14 +142,3 @@ STATIC_URL = '/static/'
 
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'US'
-
-REST_AUTH_SERIALIZERS = {
-    'LOGIN_SERIALIZER': 'users.serializers.UserLoginSerializer',
-}
-
-REST_AUTH_REGISTER_SERIALIZERS = {
-    'REGISTER_SERIALIZER': 'users.serializers.UserRegisterSerializer',
-}
-
-SITE_ID = 1
-REST_USE_JWT = True
