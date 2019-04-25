@@ -13,6 +13,8 @@ class Journey(models.Model):
     vehicle = models.ForeignKey(Vehicle, on_delete=models.PROTECT)
     driver = models.ForeignKey(User, on_delete=models.PROTECT)
     passengers = models.ManyToManyField(User, related_name="%(app_label)s_%(class)s_related")
+    # TODO: Implement gender restriction by driver
+    # allowed_genders = 
     scheduled_departure_time = models.DateTimeField()
     scheduled_arrival_time = models.DateTimeField()
     actual_departure_time = models.DateTimeField(blank=True)
