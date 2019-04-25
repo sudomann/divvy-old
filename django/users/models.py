@@ -7,7 +7,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 from .managers import CustomUserManager
-from .validators import is_hostname_supported
+from .validators import is_hostname_supported, validate_value_is_False
 
 
 class CustomUser(AbstractUser):
@@ -38,7 +38,7 @@ class CustomUser(AbstractUser):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=150)
     phone = PhoneNumberField()
-    is_minor = models.BooleanField(default=True)
+    is_minor = models.BooleanField(validators=[validate_value_is_False])
     gender = models.CharField(
         max_length=1,
         choices=GENDER_CHOICES,

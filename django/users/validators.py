@@ -14,3 +14,13 @@ def is_hostname_supported(email):
         )
     else:
         return email
+
+
+def validate_value_is_False(response):
+
+    if response:
+        raise ValidationError(
+            _("You must be at least 18 years old to use this service")
+        )
+    else:
+        return response 
