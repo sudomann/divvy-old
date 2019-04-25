@@ -24,12 +24,12 @@ class Login extends Component {
     this.setState({ error: '', loading: true });
 
     // NOTE Post to HTTPS only in production
-    axios.post("http://localhost:4000/api/v1/sign_in",{
+    axios.post("http://192.168.0.144:8000/api/auth/jwt/create/",{
         email: email,
         password: password
     })
     .then((response) => {
-      deviceStorage.saveKey("id_token", response.data.jwt);
+      deviceStorage.saveKey("access", response.data.jwt);
       this.props.newJWT(response.data.jwt);
     })
     .catch((error) => {

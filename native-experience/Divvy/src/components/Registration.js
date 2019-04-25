@@ -5,12 +5,17 @@ import axios from 'axios';
 import deviceStorage from '../services/deviceStorage';
 
 class Registration extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       email: '',
       password: '',
       password_confirmation: '',
+      first_name: '',
+      last_name: '',
+      phone: '',
+      gender: '',
+      is_minor: '',
       error: '',
       loading: false
     };
@@ -25,21 +30,19 @@ class Registration extends Component {
     this.setState({ error: '', loading: true });
 
     // NOTE Post to HTTPS only in production
-    axios.post("http://localhost:4000/api/v1/sign_up",{
-      user: {
-        email: email,
-        password: password,
-        password_confirmation: password_confirmation
-      }
-    },)
-    .then((response) => {
-      deviceStorage.saveKey("id_token", response.data.jwt);
-      this.props.newJWT(response.data.jwt);
+    axios.post("http://192.168.0.144:8000/api/auth/users/", {
+      email: email,
+      password: password,
+      // password_confirmation: password_confirmation
     })
-    .catch((error) => {
-      console.log(error);
-      this.onRegistrationFail();
-    });
+      .then((response) => {
+        deviceStorage.saveKey("access", response.data.jwt);
+        this.props.newJWT(response.data.jwt);
+      })
+      .catch((error) => {
+        console.log(error);
+        this.onRegistrationFail();
+      });
   }
 
   onRegistrationFail() {
