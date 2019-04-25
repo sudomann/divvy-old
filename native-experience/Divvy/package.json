@@ -1,5 +1,7 @@
 {
   "name": "Divvy",
+  "author": "Willy Njundong <njundongw@gmail.com>",
+  "website": "https://www.thedivvy.app/",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -7,6 +9,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "react": "16.8.3",
     "react-native": "0.59.5"
   },

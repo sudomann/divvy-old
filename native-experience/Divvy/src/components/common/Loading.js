@@ -4,7 +4,7 @@ import { View, ActivityIndicator } from 'react-native';
 const Loading = ({ size }) => {
   return (
     <View style={styles.spinnerContainer}>
-      <ActivityIndicator size={size} />
+      <ActivityIndicator size={size}/>
     </View>
   );
 };
