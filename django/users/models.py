@@ -7,25 +7,19 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 from .managers import CustomUserManager
+from .validators import is_hostname_supported
 
 
 class CustomUser(AbstractUser):
 
-    def clean_fields(self, exclude=None):
-
-        super().clean_fields(exclude=exclude)
-
+    # Manager calls full_clean()
+    # which in turn calls clean_fields()
+    # which validates the hostname in email
+    # Thus it's safe to set it here with the
+    # guarantee that it exists
+    def clean(self):
         email_hostname = self.email.partition('@')[2]
-        # automatically set `domain` ForeignKey to existing Domain record
-        # Raises ValidationError if nonexistent
-        try:
-            self.domain = Domain.objects.get(hostname=email_hostname)
-        except:  # models.Domain.DoesNotExist:
-            raise ValidationError({'domain':
-                                   _('\"{}\" emails are not supported on this service.'.format(
-                                       email_hostname))
-                                   }
-                                  )
+        self.domain = Domain.objects.get(hostname=email_hostname)
 
     FEMALE = 'F'
     MALE = 'M'
@@ -37,7 +31,9 @@ class CustomUser(AbstractUser):
     )
 
     username = None
-    email = models.EmailField(_('email address'), unique=True)
+    email = models.EmailField(_('email address'),
+                              unique=True,
+                              validators=[is_hostname_supported])
 
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=150)
@@ -57,7 +53,6 @@ class CustomUser(AbstractUser):
         'phone',
         'is_minor',
         'gender',
-
     ]
 
     objects = CustomUserManager()

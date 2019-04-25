@@ -23,3 +23,8 @@ CustomUser.objects.get(id=2)
 >>> CustomUser.objects.create_superuser(email='admin2@admins.com', password='p', first_name='Will', last_name='Njund', phone='2023456789', is_minor=False, gender='U', domain=dom)
 <CustomUser: admin2@admins.com>
 ```
+
+To render graphical representation of project
+```
+./manage.py graph_models -a -g -o my_project_visualized.svg
+```

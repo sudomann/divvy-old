@@ -1,19 +1,26 @@
 from django.contrib.auth import get_user_model
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, viewsets
 
-from .models import Domain, Zone
-from .serializers import DomainSerializer, UserSerializer, ZoneSerializer
+from .serializers import UserSerializer
 
 User = get_user_model()
 
 
-class DomainList(generics.ListAPIView):
-    queryset = Domain.objects.all()
-    serializer_class = Domain
-    permission_classes = (permissions.AllowAny)
+class UserRegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [
+        permissions.AllowAny,
+    ]
 
-
-class DomainDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Domain.objects.all()
-    serializer_class = DomainSerializer
-    permission_classes = (permissions.AllowAny, )
+'''
+class UserAccountViewSet(viewsets.ModelViewSet):
+    """
+    A simple ViewSet for viewing and editing accounts.
+    """
+    queryset = User.objects.all()
+    serializer_class = AccountSerializer
+    permission_classes = [
+        permissions.IsAccountAdminOrReadOnly,
+    ]
+'''
