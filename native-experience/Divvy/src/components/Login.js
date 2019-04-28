@@ -29,8 +29,8 @@ class Login extends Component {
         password: password
     })
     .then((response) => {
-      deviceStorage.saveKey("access", response.data.jwt);
-      this.props.newJWT(response.data.jwt);
+      deviceStorage.saveKey("jwt", response.data.jwt);
+      this.props.newJWT(response.data.access);
     })
     .catch((error) => {
       console.log(error);
@@ -54,7 +54,7 @@ class Login extends Component {
         <View style={form}>
           <View style={section}>
             <Input
-              placeholder="user@email.com"
+              placeholder="student@school.edu"
               label="Email"
               value={email}
               onChangeText={email => this.setState({ email })}
@@ -64,7 +64,6 @@ class Login extends Component {
           <View style={section}>
             <Input
               secureTextEntry
-              placeholder="password"
               label="Password"
               value={password}
               onChangeText={password => this.setState({ password })}

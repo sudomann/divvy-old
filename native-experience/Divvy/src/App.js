@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-
+<script src="http://localhost:8097"></script>
 import React, { Component } from 'react';
 import { Loading } from './components/common/';
 import Auth from './screens/Auth';

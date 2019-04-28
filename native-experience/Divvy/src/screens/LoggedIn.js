@@ -15,11 +15,11 @@ export default class LoggedIn extends Component {
 
   componentDidMount(){
     const headers = {
-      'Authorization': 'Bearer ' + this.props.jwt
+      'Authorization': 'JWT ' + this.props.jwt
     };
     axios({
       method: 'GET',
-      url: 'http://localhost:4000/api/v1/my_user',
+      url: 'http://192.168.0.144:8000/api/auth/users/me/',
       headers: headers,
     }).then((response) => {
       this.setState({
