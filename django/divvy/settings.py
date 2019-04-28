@@ -41,12 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third-Party Apps
-    'rest_auth.registration',
-    'phonenumber_field',
-    'rest_framework',
+    'background_task',
     'djoser',
     'django_extensions',  # for producing graphical representation of application
-
+    'phonenumber_field',
+    'rest_auth.registration',
+    'rest_framework',
+    
     # Local Apps (This project's apps, created by us)
     'api',
     'comment_thread',
