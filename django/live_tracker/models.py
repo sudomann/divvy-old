@@ -12,3 +12,4 @@ class Tracker(models.Model):
     journey = models.OneToOneField(Journey, on_delete=models.CASCADE)
     last_known_location = PointField()
     last_updated = models.DateTimeField(auto_now=True)
+    terminated = models.BooleanField(default=False)
