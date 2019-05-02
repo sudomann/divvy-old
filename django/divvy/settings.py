@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'djoser',
     'django_extensions',  # for producing graphical representation of application
     'phonenumber_field',
-    'rest_auth.registration',
     'rest_framework',
     
     # Local Apps (This project's apps, created by us)
@@ -198,7 +197,9 @@ DJOSER = {
 
 # For use with sendgrid mailserver
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"]
+#SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"] 
+# TODO: move this key to a secure location when done testing!
+SENDGRID_API_KEY = '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'
 SENDGRID_SANDBOX_MODE_IN_DEBUG = True
 
 # for development purposes only; don't use in PROD
