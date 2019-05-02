@@ -17,9 +17,24 @@ class CustomUser(AbstractUser):
     # which validates the hostname in email
     # Thus it's safe to set it here with the
     # guarantee that it exists
+    @classmethod
     def clean(self):
         email_hostname = self.email.partition('@')[2]
         self.domain = Domain.objects.get(hostname=email_hostname)
+
+    @classmethod
+    def normalize_email(cls, email):
+        """
+        Normalize the email address by lowercasing the entire string.
+        """
+        email = email or ''
+        try:
+            email_name, domain_part = email.strip().rsplit('@', 1)
+        except ValueError:
+            pass
+        else:
+            email = email.lower()
+        return email
 
     FEMALE = 'F'
     MALE = 'M'
