@@ -8,8 +8,9 @@ import { Loading } from './components/common/';
 import Auth from './screens/Auth';
 import LoggedIn from './screens/LoggedIn';
 import deviceStorage from './services/deviceStorage.js';
+import { createStackNavigator, createAppContainer } from "react-navigation";
 
-export default class App extends Component {
+class Landing extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -23,7 +24,7 @@ export default class App extends Component {
     this.loadJWT();
   }
 
-  newJWT(jwt){
+  newJWT(jwt) {
     this.setState({
       jwt: jwt
     });
@@ -33,7 +34,7 @@ export default class App extends Component {
     if (this.state.loading) {
       return (
         <Loading size={'large'} />
-       );
+      );
     } else if (!this.state.jwt) {
       return (
         <Auth newJWT={this.newJWT} />
@@ -45,3 +46,11 @@ export default class App extends Component {
     }
   }
 }
+
+const AppNavigator = createStackNavigator({
+  Home: {
+    screen: Landing
+  }
+});
+
+export default createAppContainer(AppNavigator);

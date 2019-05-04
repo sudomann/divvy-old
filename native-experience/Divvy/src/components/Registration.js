@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import { Text, View } from 'react-native';
+import { Alert, Text, TouchableOpacity, View } from 'react-native';
 import { Input, TextLink, Loading, Button } from './common';
 import axios from 'axios';
 import deviceStorage from '../services/deviceStorage';
-
+// TODO: implement stricter axios timeout so when server is unavailable
+// wait time for error message isn't stupid long
 class Registration extends Component {
   constructor(props) {
     super(props);
@@ -18,12 +19,26 @@ class Registration extends Component {
       is_minor: '',
       error: '',
       loading: false,
+      showAlert1: false,
     };
 
     this.registerUser = this.registerUser.bind(this);
     this.onRegistrationFail = this.onRegistrationFail.bind(this);
   }
 
+  registerSuccessAlert() {  
+    Alert.alert(  
+        'Registration Sucessful',  
+        'Check your email for a confirmation link to activate your account.',  
+        [  
+            {  
+                text: 'OK',  
+                onPress: () => this.props.authSwitch(),
+            }
+        ],
+        {cancelable: false},  
+    );  
+} 
   registerUser() {
     const { email,
       password,
@@ -47,11 +62,10 @@ class Registration extends Component {
       gender: gender,
       is_minor: is_minor
     })
-      .then((response) => {
-        deviceStorage.saveKey("jwt", response.data.access);
+    // REVERT OR REFINE HERE!!!
+      .then( () => {
         this.setState({ error: '', loading: false });
-
-        // this.props.newJWT(response.data.access);
+        this.registerSuccessAlert();
       })
       .catch((error) => {
         console.log(error);
@@ -63,11 +77,13 @@ class Registration extends Component {
 
   onRegistrationFail() {
     this.setState({
-      error: 'Registration Failed',
+      error: 'There was an error euthenticating that request',
       loading: false
     });
   }
 
+  
+  
   render() {
     const { email,
       password,
@@ -156,7 +172,6 @@ class Registration extends Component {
           <Text style={errorTextStyle}>
             {error}
           </Text>
-
           {!loading ?
             <Button onPress={this.registerUser}>
               Register
