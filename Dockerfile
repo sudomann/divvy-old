@@ -1,17 +1,19 @@
 FROM ubuntu:bionic-20190424
 
-RUN apt-get update && apt-get install -y curl=7.58.0-2ubuntu3.6 \
+RUN apt-get update && apt-get install -y build-essential \
+                                        curl \
                                         gdal-bin \
-                                        install binutils \
+                                        binutils \
                                         libproj-dev \
-                                        python3.6 \
-                                        python3-distutils
+                                        libpq-dev \
+                                        python3.6-distutils \
+                                        python3.6-dev
 
-RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python3 get-pip.py
+RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python3.6 get-pip.py
 
 COPY requirements.txt /
 
-RUN python3 -m pip install -r requirements.txt
+RUN python3.6 -m pip install -r requirements.txt
 
 ADD django/ /divvy/
 
