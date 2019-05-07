@@ -8,3 +8,4 @@ djangorestframework-simplejwt==4.1.5
 djoser==1.5.1
 gunicorn==19.9.0
 phonenumbers==8.10.9
+psycopg2==2.8.2

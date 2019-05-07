@@ -2,7 +2,8 @@ FROM ubuntu:bionic-20190424
 
 RUN apt-get update && apt-get install -y curl=7.58.0-2ubuntu3.6 \
                                         gdal-bin \
-                                        libsqlite3-mod-spatialite \
+                                        install binutils \
+                                        libproj-dev \
                                         python3.6 \
                                         python3-distutils
 
