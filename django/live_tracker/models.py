@@ -10,6 +10,6 @@ User = get_user_model()
 class Tracker(models.Model):
     source = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
     journey = models.OneToOneField(Journey, on_delete=models.CASCADE)
-    last_known_location = PointField()
+    last_known_location = PointField(blank=True)
     last_updated = models.DateTimeField(auto_now=True)
     terminated = models.BooleanField(default=False)

@@ -28,3 +28,23 @@ To render graphical representation of project
 ```
 ./manage.py graph_models -a -g -o my_project_visualized.svg
 ```
+
+Test 
+```
+from django.test.client import RequestFactory
+from djoser.views import ActivationView
+import inspect
+```
+
+
+Note's relating to calling a class based view from another view
+
+```
+# stash credentials first
+data = { 'uid':'MzM', 'token':'563-6a102cdb870f3a3bf5ee'}
+
+# then make POST request with the credential data
+request = RequestFactory().post('/account/activate/MzM/563-6a102cdb870f3a3bf5ee',                                    data)
+# pass the request to the Activation class based view
+activate = ActivationView.as_view()(request)
+```
