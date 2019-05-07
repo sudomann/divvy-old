@@ -201,7 +201,7 @@ EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 #SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"] 
 # TODO: move this key to a secure location when done testing!
 SENDGRID_API_KEY = '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'
-SENDGRID_SANDBOX_MODE_IN_DEBUG = True
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
 # for development purposes only; don't use in PROD
-SENDGRID_ECHO_TO_STDOUT = True
+SENDGRID_ECHO_TO_STDOUT = False
