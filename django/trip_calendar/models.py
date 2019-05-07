@@ -1,41 +1,29 @@
 from django.contrib.auth import get_user_model
-from django.contrib.gis.db.models import PointField
-from django.core.validators import MinLengthValidator
 from django.db import models
-
-from users.models import Zone
+from comment_thread.models import Comment
+from vehicle_management.models import Vehicle
+from zone_management.models import Zone
 
 
 User = get_user_model()
-
-
-class Vehicle(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.PROTECT)
-    license_plate = models.CharField(
-        validators=[MinLengthValidator(5)], max_length=8)
-    added_time = models.DateTimeField(auto_now_add=True)
-    is_roadsafe = models.BooleanField(default=False)
-
-
-class Comment(models.Model):
-    content = models.CharField(max_length=100)
-    member = models.ForeignKey(User, on_delete=models.PROTECT)
-    created_time = models.DateTimeField(auto_now_add=True)
-    last_modified = models.DateTimeField(auto_now=True)
-    deleted = models.BooleanField(default=False)
 
 
 class Journey(models.Model):
     details = models.CharField(max_length=100, blank=True)
     vehicle = models.ForeignKey(Vehicle, on_delete=models.PROTECT)
     driver = models.ForeignKey(User, on_delete=models.PROTECT)
-    passengers = models.ManyToManyField(User, related_name='passengers')
+    passengers = models.ManyToManyField(User, 
+                                        related_name="%(app_label)s_%(class)s_related",
+                                        through='Passenger')
+    # TODO: Implement gender restriction by driver
+    # allowed_genders = 
     scheduled_departure_time = models.DateTimeField()
     scheduled_arrival_time = models.DateTimeField()
     actual_departure_time = models.DateTimeField(blank=True)
     actual_arrival_time = models.DateTimeField(blank=True)
     destination = models.ForeignKey(Zone, on_delete=models.PROTECT)
     comments = models.ManyToManyField(Comment)
+    
 
     class Meta:
         ordering = ('details',)  # TODO: fix this shit
@@ -43,8 +31,8 @@ class Journey(models.Model):
     def __str__(self):
         return self.details
 
-
-class Tracker(models.Model):
-    journey = models.OneToOneField(Journey, on_delete=models.CASCADE)
-    last_known_location = PointField()
-    last_updated = models.DateTimeField(auto_now=True)
+class Passenger(models.Model):
+    member = models.ForeignKey(User, on_delete=models.PROTECT)
+    journey = models.ForeignKey(Journey, on_delete=models.PROTECT)
+    date_joined = models.DateField()
+    vehicle_plate_confirmed = models.BooleanField()

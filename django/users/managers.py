@@ -17,13 +17,18 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError(_('The Email must be set'))
 
-        email = self.normalize_email(email)
+        # email = self.normalize_email(email)
+        email = email.strip().lower() 
+        # TODO: need to enforce auto lowercasing during login as well
 
         user = self.model(email=email, **extra_fields)
         
         user.set_password(password)
-        user.full_clean(exclude=['domain']) # automatically set in CustomUser model
         
+        # domain field is automatically set in
+        # CustomUser model when provided email is valid
+        user.full_clean(exclude=['domain'])
+
         user.save()
         return user
 

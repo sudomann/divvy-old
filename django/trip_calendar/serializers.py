@@ -1,26 +1,19 @@
 from rest_framework import serializers
-from .models import Comment, Journey, Vehicle, Tracker
+from .models import Journey
 
-class CommentSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Comment
-        fields = ()
 
 class JourneySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Journey
-        fields = ()
+        fields = ('details',
+                  'vehicle',
+                  'driver',
+                  'passengers',
+                  'scheduled_departure_time',
+                  'scheduled_arrival_time',
+                  'destination')
 
-class VehicleSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = Vehicle
-        fields = ()
 
-class TrackerSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = Tracker
-        fields = ()

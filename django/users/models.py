@@ -1,50 +1,25 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.contrib.gis.db import models
 from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator
+from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from domain_management.models import Domain
 from phonenumber_field.modelfields import PhoneNumberField
 
+
 from .managers import CustomUserManager
-
-
-class Zone(models.Model):
-    title = models.CharField(max_length=20)
-    details = models.CharField(max_length=100)
-    location = models.PointField(unique=True)
-
-
-class Domain(models.Model):
-    hostname = models.CharField(max_length=30,
-                                unique=True,
-                                validators=[
-                                    RegexValidator(regex='^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$',
-                                                   message="Invalid hostname"
-                                                   )
-                                ]
-                                )
-    details = models.CharField(max_length=100)
-    available_zones = models.ManyToManyField(Zone, blank=True)
+from .validators import is_hostname_supported, validate_value_is_False
 
 
 class CustomUser(AbstractUser):
 
-    def clean_fields(self, exclude=None):
-
-        super().clean_fields(exclude=exclude)
-
+    # Manager calls full_clean()
+    # which in turn calls clean_fields()
+    # which validates the hostname in email
+    # Thus it's safe to set it here with the
+    # guarantee that it exists
+    def clean(self):
         email_hostname = self.email.partition('@')[2]
-        # automatically set `domain` ForeignKey to existing Domain record
-        # Raises ValidationError if nonexistent
-        try:
-            self.domain = Domain.objects.get(hostname=email_hostname)
-        except:  # models.Domain.DoesNotExist:
-            raise ValidationError({'domain':
-                                   _('\"{}\" emails are not supported on this service.'.format(
-                                       email_hostname))
-                                   }
-                                  )
+        self.domain = Domain.objects.get(hostname=email_hostname)
 
     FEMALE = 'F'
     MALE = 'M'
@@ -56,12 +31,14 @@ class CustomUser(AbstractUser):
     )
 
     username = None
-    email = models.EmailField(_('email address'), unique=True)
+    email = models.EmailField(_('email address'),
+                              unique=True,
+                              validators=[is_hostname_supported])
 
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=150)
     phone = PhoneNumberField()
-    is_minor = models.BooleanField(default=True)
+    is_minor = models.BooleanField(validators=[validate_value_is_False])
     gender = models.CharField(
         max_length=1,
         choices=GENDER_CHOICES,
@@ -76,21 +53,9 @@ class CustomUser(AbstractUser):
         'phone',
         'is_minor',
         'gender',
-
     ]
 
     objects = CustomUserManager()
 
     def __str__(self):
         return self.email
-
-class Contacts(models.Model):
-    
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=150)
-    email = models.EmailField(_('email address'), unique=True)
-    phone = PhoneNumberField()
-    is_minor = models.BooleanField(default=True)
-
-    def __str__(self):
-            return '%s %s, %s' % (self.first_name, self.last_name, self.email)

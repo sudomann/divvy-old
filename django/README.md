@@ -1,14 +1,6 @@
 # divvy
 Mobile app for students to split gas and ride together
 
-
-python packages:
-Django==2.2
-django-phonenumber-field==2.3.1
-djangorestframework==3.9.2
-djangorestframework-simplejwt==4.1.5
-phonenumbers==8.10.9
-
 system packages:
 GDAL (installed on Ubuntu 18.04 with `sudo apt install gdal-bin`)
 sudo apt install  libsqlite3-mod-spatialite
@@ -30,4 +22,29 @@ CustomUser.objects.get(id=2)
 ```
 >>> CustomUser.objects.create_superuser(email='admin2@admins.com', password='p', first_name='Will', last_name='Njund', phone='2023456789', is_minor=False, gender='U', domain=dom)
 <CustomUser: admin2@admins.com>
+```
+
+To render graphical representation of project
+```
+./manage.py graph_models -a -g -o my_project_visualized.svg
+```
+
+Test 
+```
+from django.test.client import RequestFactory
+from djoser.views import ActivationView
+import inspect
+```
+
+
+Note's relating to calling a class based view from another view
+
+```
+# stash credentials first
+data = { 'uid':'MzM', 'token':'563-6a102cdb870f3a3bf5ee'}
+
+# then make POST request with the credential data
+request = RequestFactory().post('/account/activate/MzM/563-6a102cdb870f3a3bf5ee',                                    data)
+# pass the request to the Activation class based view
+activate = ActivationView.as_view()(request)
 ```
