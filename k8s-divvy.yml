@@ -1,21 +1,96 @@
-apiVersion: apps/v1
+# [START kubernetes_deployment]
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: divvy
+  namespace: default
   labels:
     app: divvy
 spec:
-  replicas: 3
+  replicas: 8
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: divvy
+  strategy:
+    # To help you understand: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#proportional-scaling
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
       labels:
         app: divvy
     spec:
+      restartPolicy: IfNotPresent
+      terminationGracePeriodSeconds: 30
       containers:
-      - name: divvy
-        image: divvy:latest
+      - name: divvy-django
+        image: gcr.io/divvy-project-238602/divvy:0.0.1
+        imagePullPolicy: IfNotPresent
+        env:
+            - name: DJANGO_SETTINGS_MODULE
+              value: "website.settings.production"
+            # [START cloudsql_secrets]
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql
+                  key: username
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql
+                  key: password
+            # [END cloudsql_secrets]
         ports:
-        - containerPort: 80
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+
+      # [START proxy_container]
+      - name: cloudsql-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:1.14
+        command: ["/cloud_sql_proxy", "--dir=/cloudsql",
+                  "-instances=divvy-project-238602:us-east1:divvy-dev=tcp:5432",
+                  "-credential_file=/secrets/cloudsql/credentials.json"]
+        volumeMounts:
+          - name: cloudsql-oauth-credentials
+            mountPath: /secrets/cloudsql
+            readOnly: true
+          - name: ssl-certs
+            mountPath: /etc/ssl/certs
+          - name: cloudsql
+            mountPath: /cloudsql
+      # [END proxy_container]
+      # [START volumes]
+      volumes:
+        - name: cloudsql-oauth-credentials
+          secret:
+            secretName: cloudsql-oauth-credentials
+        - name: ssl-certs
+          hostPath:
+            path: /etc/ssl/certs
+        - name: cloudsql
+          emptyDir:
+      # [END volumes]        
+# [END kubernetes_deployment]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-nodeport
+  labels:
+    app: divvy
+  namespace: default
+spec:
+  selector:
+    app: divvy 
+  type: NodePort
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+---

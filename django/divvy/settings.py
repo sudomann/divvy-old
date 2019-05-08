@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'api',
     'comment_thread',
     'contact_management',
+    'core',
     'domain_management',
     'live_tracker',
     'trip_calendar',

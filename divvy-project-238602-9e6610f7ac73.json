@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "divvy-project-238602",
+  "private_key_id": "9e6610f7ac735a21bc5e57172c4a380103bca54b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC/fj6/Y5ntcqo4\ngZZvzODZppmDvYrI2ulHo3XloLyGDFZatDNtkJpsPy1dgZY6Hdi6ZVEUhJdpfNK+\nsKTd2mtRogyWL0LEfu9qCswEca4K3VIuVGojETsSVUfw7iKdsSTeUsJtBqAU9150\nc4Hb4/Zsq10qjocr10IUhUGabVvQfvK7Z3a+Sp4F+b6MUcxai4208k2zhL4HDRjk\nzb+uck7INfdzmCeIitF2aDpmUUCz85a9yDyG+UP5ABs81IpGuzMPAGFC0Zprm7ks\n2rrGpROE7upjjBdS6nAhUe7CcBS8p2n9NQuzKh2Ez1TjR7IcDcHFnQAZ3MkpxTd3\nz1X0BAWLAgMBAAECggEAMohvqZTwpWMJfYDhAJ7ZxUX8I/JMYgW24uNFdPPuXBd8\nYFJGcgbjYWZoo9DTIoIG0+VxuI7m3/0DJjQ6RZtij7fKR4WwQmdW6a5wuUmAirht\n+/Dl01w0MPnVUsSc2O1K0+qWCSxi6TWANQ3YOn1VZcbw/o5/KDgVZZHmxohOXt30\nVE8heKuKWbVSmbx4ObqRY7oblD3Ejs8aG0rofVCbG5klKzedyPHugbOeQ2UI0ykl\n5u0E+Pg56DnjbNzIOjf3WAyjXMvuCIsbMxK8K4wFfM8XfvgpBqkljkRrujv4GH8O\n/GJ9SuSrKWuqSCl9p6bJ2bhqSIwuSPY/A5BlQsOUDQKBgQDodrS+HkYLVe1HBzgT\n+gSo+GzDyzgBrDOncQrGV3Ws3Nm7x6hM+Bjw9stROQqfGn77nYkE4SZS3Ch5V7su\nttW8f8Wsx/QwrluonGIwGpjuMgYN3QRiBOhJdZaadjaC8+uRqtNHl6T+hbjoqRbM\nyiABM0bCrnK5KzfLmyy9hOUj5QKBgQDS4ZyLBZd6ozR+0Q7Tg6nY/IFJL6oTQjN3\nFghbJK/Yoia7uMYWukfU2rwQIREh1GYmhsMX6V1HiYJ8nmg7G5saNQYXWJm1m/y5\nmuKkQt+kUtHTCy3wbZn/ir62MtBMH+NSwNSQOhKdyPcXKvwiptI/1cexXCGhIxld\nD/ELF07MrwKBgQDnyi1QgJkxBl3Qe/dDnAF3hjXVSNWwfUcIB2RJ/r0cPx5v6ZX8\nIUmlQz/Z3jmkCWRieWM9VU7EQjetPngrDS2zhefR75Kh08kbJ8uT0YF5yLFWs3GC\nVwhS7wfbPlH+Yz8ZgS6obSGclDOa8bcFPemJqNo+lnlX/yrkPvbuhguArQKBgDlz\n7BFYKafo1QGD9XUc1uZeDN8ilESA8cKNByPFv/7WVpUoRxekErPkD/6Y87DyzA3N\nA1P9aUN3LEzFX4JTCBPAxHMR2XbIE7eBgiPccE+1nKLR1ec+BQnBBCphd6x1t5ox\nHPhaSf4g5WizdlP+fSOVG72vax4akOtwz2wFIpvTAoGABD+wdKLh4tHQe4kLWDcA\n9zk30Mg2o/PlqltZGbjb5HLQCLLdkisdJ+RBqEzgJDoFn+OPaMAQh6S+6pb8Wgq/\nb8H+PkPSChI0qbtvWHL7DbXFzVp3splvc3vLpfs64jjW9kUm+hcUDcHT7/a8q9n+\nLsvWF3qDzX0/rfF+ZGOXlMg=\n-----END PRIVATE KEY-----\n",
+  "client_email": "dns01-solver@divvy-project-238602.iam.gserviceaccount.com",
+  "client_id": "107044882091745933158",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dns01-solver%40divvy-project-238602.iam.gserviceaccount.com"
+}

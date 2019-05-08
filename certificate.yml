@@ -1,0 +1,25 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: thedivvy-app
+  # namespace: default
+spec:
+  secretName: thedivvy-app-tls
+  issuerRef:
+    kind: ClusterIssuer
+    # The cluster issuer created previously
+    name: letsencrypt-staging
+  commonName: thedivvy.app
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  dnsNames:
+  - thedivvy.app
+  - www.thedivvy.app
+  acme:
+    config:
+    - dns01:
+        # The provider in the previously created issuer
+        provider: clouddns-provider
+      domains:
+      - thedivvy.app
+      - www.thedivvy.app

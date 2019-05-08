@@ -1,0 +1,25 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    # You must replace this email address with your own.
+    # Let's Encrypt will use this to contact you about expiring
+    # certificates, and issues related to your account.
+    email: njundongw@gmail.com
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      # Secret resource used to store the account's private key.
+      name: issuer-account-key
+    dns01:
+      providers:
+      # The name given to this CloudDNS provider, multiple CloudDNS providers can be added with different names
+      - name: clouddns-provider
+        clouddns:
+          # The ID of the GCP project
+          project: divvy-project-238602
+          # This is the secret used to access the service account
+          serviceAccountSecretRef:
+            name: clouddns-dns01-solver-svc-acct
+            key: divvy-project-238602-9e6610f7ac73.json
