@@ -1,9 +1,10 @@
+{% load static from staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
-  <title>The Divvy App</title>
+  <title>The Divvy App - {% block title %}Welcome{% endblock %}</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
   <meta content="" name="description">
@@ -18,8 +19,7 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Main Stylesheet File -->
-  <link href="css/style.css" rel="stylesheet">
-
+  <link href="{% static "css/style.css" %}" rel="stylesheet">
 </head>
 
 <body>
@@ -28,26 +28,7 @@
   <!-- Hero -->
 
   <section class="hero">
-    <div class="container text-center">
-      <div class="row">
-        <div class="col-md-12">
-          <a class="hero-brand" href="index.html" title="Home"><img alt="The Divvy App Logo" src="img/logo.png"></a>
-        </div>
-      </div>
-
-      <div class="col-md-12">
-        <h1>
-            The Divvy App
-          </h1>
-
-        <p class="tagline">
-          Don't make the long drive home alone.
-          Passengers cover gas, you just drive.
-        </p>
-        <a class="btn btn-full" href="#">App Link Coming Soon</a>
-      </div>
-    </div>
-
+    {% block content %}{% endblock content%}
   </section>
   <!-- /Hero -->
 

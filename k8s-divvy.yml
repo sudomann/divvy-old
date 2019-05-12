@@ -7,7 +7,7 @@ metadata:
   labels:
     app: divvy
 spec:
-  replicas: 8
+  replicas: 6
   progressDeadlineSeconds: 600
   revisionHistoryLimit: 10
   selector:
@@ -24,27 +24,12 @@ spec:
       labels:
         app: divvy
     spec:
-      restartPolicy: IfNotPresent
+      restartPolicy: Always
       terminationGracePeriodSeconds: 30
       containers:
       - name: divvy-django
-        image: gcr.io/divvy-project-238602/divvy:0.0.1
+        image: gcr.io/divvy-project-238602/divvy:0.0.2
         imagePullPolicy: IfNotPresent
-        env:
-            - name: DJANGO_SETTINGS_MODULE
-              value: "website.settings.production"
-            # [START cloudsql_secrets]
-            - name: DATABASE_USER
-              valueFrom:
-                secretKeyRef:
-                  name: cloudsql
-                  key: username
-            - name: DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: cloudsql
-                  key: password
-            # [END cloudsql_secrets]
         ports:
         - containerPort: 8080
           protocol: TCP
@@ -81,16 +66,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: service-nodeport
+  name: thedivvyapp-nodeport-service
   labels:
     app: divvy
   namespace: default
 spec:
+  type: NodePort
   selector:
     app: divvy 
-  type: NodePort
   ports:
-  - port: 8080
-    protocol: TCP
-    targetPort: 8080
----
+    - protocol: TCP
+      port: 80
+      targetPort: 8080

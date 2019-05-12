@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "divvy-project-238602",
+  "private_key_id": "b2e711ccc79c7f749aae0c2638b027cc47311f1c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC78oYtmyChMVsm\nWzVqIJ57Dunq+VQEElwQeJsRqnvAItLNksMhT/GMkpdPH/qxcZ7FBIiDgEvoStE1\nbIKfBF/PDzT9XDdQn1Nm/ogpqo77KgwLUHSp+Di4GV+U7T9xYSdzjRrF3EnjiAFv\nTPKhFgql8/TN8xdM5MOEWBSRMJ2pWpK6S9n0hyslFPCIjpOSRrJ++PGK8r+1se7P\nMd80S1eq8ketNnTCSgmVoSwrdECdTGXRQxns9gvZVF0KR+PGm7QV8iryJ89LzXoQ\nsWYBRU2rNjhsl70gwvwNPjV/1nUM4PVyTZmR5Q/hnHz5+ECkyszW9T/9FlN9zyrF\nwFbdGiQPAgMBAAECggEAVF4zA0fups1MGHS7Do/j9GOmd7dCkq1XLIGnQo/gC0jW\njjeCZnLHgI3RZFB7ranOVqyJR1aRPI5RSYUTQaSqCX3PEKiToBpVSxeZMfMBShf+\n3hlYtW/arjGdqXGymAe/uOwvh4AynvPPiRHmnI8TapmPW9/ypq7OYZtUaDSFoZ5k\nhR+DUCcdtd+EUObitdvWbcTlaSaSZPgYey6POqBouLTkdrd3ieynTScW9We3ICTP\n+juohyjlKC5But32ZhqbsyF6fCFqHR2J1Gpb0G3kp4miLGbpRdl4AEQuJHiY6Jbv\nVFFu/qiYpxElnV3T5tGmlcbLbkmlQKghp75us95s6QKBgQDqAyVM9H4qmF7feURj\nEAl7OCgGCkbnGGR20+g4scqYGszgM25NFZZt+d5ueVzUCheGro4QWHRRRzgGguvR\nuKA47d8ocg80tYqWoK/qlbs/mVYrHusn38WvuHBBPXAKDO4dux2tFoFs20nTwACr\n09Vm43YzdWQblRdh7C6lI7y3bQKBgQDNm1kNdbuXct1c0rtX1+d3HexYvJVvIm/R\n1+ElbvhsA/ihtAhfWrp4veUK8kvxpSRAARhWH4zSJvGWJ9nIsoaXOOkqdnSQH2oQ\njpvMg7lrH667esH71V36JP6yyiSD9rwVIY+QK/87Z+hEJCOVk42vm9JeENY41C2d\nHYwaj7vv6wKBgQCoGAJfOPC34COmGxHIpuhonnoBfLhZn+fqg2U39F42zGmGUutU\na8FW1jm02XCYz3b+w7xAeYl0KNhRtRF34EsXGadHAkdx8UXP1TUIKO4MTTTcXKVG\nSzNRegcIlf04+vjAWnyCrLvjWdG6TR0uUEfmVFW/uP9j4MCfEmyfKwCQMQKBgDCh\nds29NBKdQ4hp+4/KbF/7PuS6LiosHgCnLASbm7yIr+0nVPeg0Qwv9hXBu367Tbip\nyaTNL5ShS3D1mghjWXw5JMU7YVSZaY/i+yzDVz7kLoL/hRRYojLBP1DwiPSBjnj9\nCCTUkzjs2b4MQjJlxRRtKbPADbtBTEymKXY62vvjAoGAbHI8VIExh4aYQ2brX36G\nqV6ZIjQfU5f+zWghvaGpL4vlU/a2oBx6GmL+OJLBwL1VZa1+6Al2iBuYtG3VbXko\ns2ln7DtYzJSh9raiM3moYm7q6kbI/PJkfjD+cb2OiX7bOtsJCfXJV76LMTZVU4Em\nhTq9pWrcbMHC8Nse99EE0jA=\n-----END PRIVATE KEY-----\n",
+  "client_email": "django-static@divvy-project-238602.iam.gserviceaccount.com",
+  "client_id": "102779339300350185816",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/django-static%40divvy-project-238602.iam.gserviceaccount.com"
+}
