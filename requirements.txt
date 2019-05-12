@@ -10,3 +10,4 @@ djoser==1.5.1
 gunicorn==19.9.0
 phonenumbers==8.10.9
 psycopg2==2.8.2
+raven==6.10.0

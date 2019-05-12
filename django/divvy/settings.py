@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 from datetime import timedelta
 from google.oauth2 import service_account
+import logging.config
+from django.utils.log import DEFAULT_LOGGING
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'kq=@sxr2_^q7$3$iwdgp2=_@1)ca9ga&39u!xb8f#sc=snt%kh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -40,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'raven.contrib.django.raven_compat',
 
     # Third-Party Apps
     'background_task',
@@ -236,3 +240,71 @@ SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
 # for development purposes only; don't use in PROD
 SENDGRID_ECHO_TO_STDOUT = False
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Disable Django's logging setup
+LOGGING_CONFIG = None
+
+LOGLEVEL = os.environ.get('LOGLEVEL', 'info').upper()
+
+logging.config.dictConfig({
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'default': {
+            # exact format is not important, this is the minimum information
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+        },
+        'django.server': DEFAULT_LOGGING['formatters']['django.server'],
+    },
+    'handlers': {
+        # console logs to stderr
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'default',
+        },
+        # Add Handler for Sentry for `warning` and above
+        'sentry': {
+            'level': 'WARNING',
+            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+        },
+        'django.server': DEFAULT_LOGGING['handlers']['django.server'],
+    },
+    'loggers': {
+        # default for all undefined Python modules
+        '': {
+            'level': 'WARNING',
+            'handlers': ['console', 'sentry'],
+        },
+        # Our application code
+        'app': {
+            'level': LOGLEVEL,
+            'handlers': ['console', 'sentry'],
+            # Avoid double logging because of root logger
+            'propagate': False,
+        },
+        # Prevent noisy modules from logging to Sentry
+        'noisy_module': {
+            'level': 'ERROR',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        # Default runserver request logging
+        'django.server': DEFAULT_LOGGING['loggers']['django.server'],
+    },
+})
