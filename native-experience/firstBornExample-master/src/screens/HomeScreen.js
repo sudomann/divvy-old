@@ -38,13 +38,13 @@ export class HomeScreen extends Component {
                 </Button>
                 <ListItem title="Heading Only" />
                 <ListItem title="Heading" description="And Description" />
-                <ListItem title="Heading" description="Description" image={require("../assets/img/scenery.png")} />
-                <ListItem title="Heading" description="Description" image={require("../assets/img/scenery.png")} >
+                <ListItem title="Heading" description="Description" image={require("../assets/img/scenery.jpg")} />
+                <ListItem title="Heading" description="Description" image={require("../assets/img/scenery.jpg")} >
                     <ListItem title="Heading" description="And Description" />
                 </ListItem>
                 <Card title="Heading Only" />
                 <Card title="Heading" description="And Description" />
-                <Card title="Heading" description="Description" image={require("../assets/img/scenery.png")} />
+                <Card title="Heading" description="Description" image={require("../assets/img/scenery.jpg")} />
                 <FormDatePicker label="Date" />
                 {/*<FormInput label="Email" placeholder="john.doe@gmail.com" onChangeText={this.handleTextChange} isValid={this.checkInputValidity} />
                 <FormTextArea label="Description" onChangeText={this.handleTextChange} />*/}

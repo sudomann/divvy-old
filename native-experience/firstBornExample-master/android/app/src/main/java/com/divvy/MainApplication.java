@@ -1,4 +1,4 @@
-package com.firstbornexample;
+package com.divvy;
 
 import android.app.Application;
 

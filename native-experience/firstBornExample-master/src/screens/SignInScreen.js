@@ -18,8 +18,8 @@ export class SignInScreen extends React.Component {
     }
   }
 
-  static defaultNavigationOptions = {
-    title: 'Sign In',
+  static navigationOptions = {
+    title: 'Welcome. Please Sign In',
   };
 
   signInAsync = async () => {

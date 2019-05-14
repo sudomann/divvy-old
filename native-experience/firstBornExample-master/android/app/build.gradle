@@ -103,7 +103,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.firstbornexample"
+        applicationId "com.divvy"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

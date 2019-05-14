@@ -15,8 +15,8 @@ export class RegistrationScreen extends React.Component {
     this.state = Object.assign({}, this.state, { isMinor: true }); // append variable to state
   }
 
-  static defaultNavigationOptions = {
-    title: 'Register', // TODO: MAKE THIS SHOW
+  static navigationOptions = {
+    title: 'Create Account',
   };
 
 

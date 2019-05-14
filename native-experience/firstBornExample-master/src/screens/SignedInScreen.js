@@ -110,17 +110,17 @@ export class SignedInScreen extends Component {
       {
         title: "Heading 1",
         description: "Description 1",
-        image: require("../assets/img/scenery.png")
+        image: require("../assets/img/scenery.jpg")
       },
       {
         title: "Heading 2",
         description: "Description 2",
-        image: require("../assets/img/scenery.png")
+        image: require("../assets/img/scenery.jpg")
       },
       {
         title: "Heading 3",
         description: "Description 3",
-        image: require("../assets/img/scenery.png")
+        image: require("../assets/img/scenery.jpg")
       },
     ];
   
