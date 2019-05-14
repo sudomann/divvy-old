@@ -1,5 +1,7 @@
 {
-  "name": "firstBornExample",
+  "name": "Divvy",
+  "author": "Willy Njundong <njundongw@gmail.com>",
+  "website": "https://www.thedivvy.app/",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -8,9 +10,11 @@
   },
   "dependencies": {
     "@99xt/first-born": "^1.1.2",
+    "@react-native-community/async-storage": "^1.4.0",
+    "axios": "^0.18.0",
     "create-react-class": "^15.6.3",
     "react": "16.8.3",
-    "react-native": "0.59.3",
+    "react-native": "0.59.8",
     "react-native-gesture-handler": "^1.2.1",
     "react-native-vector-icons": "^6.4.2",
     "react-navigation": "^3.9.1"

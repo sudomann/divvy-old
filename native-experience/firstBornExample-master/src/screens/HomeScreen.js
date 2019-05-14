@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
 import { Text, Icon, Button, Picker, FormDatePicker, FormInput, FormTextArea, FormPicker, Card, ListItem } from "@99xt/first-born";
 
-export class Home extends Component {
+export class HomeScreen extends Component {
 
     constructor(props) {
         super(props);
@@ -12,10 +12,10 @@ export class Home extends Component {
         }
     }
 
-    handleTextChange = (text) => {
+   /*  handleTextChange = (text) => {
         this.setState({ text: text })
     }
-
+ */
     checkInputValidity = (text) => {
         const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         return regex.test(text);
@@ -24,36 +24,13 @@ export class Home extends Component {
     render() {
         return (
             <View style={styles.innerContainer}>
-                <Text size="h4" margin>first-born example</Text>
-                <Icon name="heart" color="red" size={40} />
-                <Button size="small">
-                    <Text>Small</Text>
-                </Button>
-                <Button >
-                    <Text>Default</Text>
-                </Button>
-                <Button size="large">
-                    <Text>Large</Text>
-                </Button>
-                <Button >
-                    <Icon name="heart" />
-                    <Text>Default</Text>
-                </Button>
                 <Button rounded>
                     <Icon name="heart" />
                     <Text>Rounded</Text>
                 </Button>
-                <Button block>
-                    <Icon name="heart" />
-                    <Text>Block</Text>
-                </Button>
                 <Button rounded block>
                     <Icon name="heart" />
                     <Text>{"Rounded & Block"}</Text>
-                </Button>
-                <Button outline>
-                    <Icon name="heart" />
-                    <Text>Outline</Text>
                 </Button>
                 <Button outline transparent>
                     <Icon name="heart" />
@@ -69,8 +46,8 @@ export class Home extends Component {
                 <Card title="Heading" description="And Description" />
                 <Card title="Heading" description="Description" image={require("../assets/img/scenery.png")} />
                 <FormDatePicker label="Date" />
-                <FormInput label="Email" placeholder="john.doe@gmail.com" onChangeText={this.handleTextChange} isValid={this.checkInputValidity} />
-                <FormTextArea label="Description" onChangeText={this.handleTextChange} />
+                {/*<FormInput label="Email" placeholder="john.doe@gmail.com" onChangeText={this.handleTextChange} isValid={this.checkInputValidity} />
+                <FormTextArea label="Description" onChangeText={this.handleTextChange} />*/}
                 <FormPicker label="Number">
                     <Picker.Item value="1" label="1" />
                     <Picker.Item value="2" label="2" />
