@@ -8,6 +8,13 @@ import {
   NavBarButton, TabItem, TabBar, PillView
 } from "@99xt/first-born";
 import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios'
+
+const backend = axios.create({
+  //baseURL: 'https://thedivvy.app/api/',
+  baseURL: '192.168.1.144:8000/api/',
+  timeout: 1000
+});
 
 export class SignInScreen extends React.Component {
   constructor(props) {
@@ -23,9 +30,37 @@ export class SignInScreen extends React.Component {
   };
 
   signInAsync = async () => {
-    await AsyncStorage.setItem('userToken', 'abc');
-    this.props.navigation.navigate('App');
+    formData = {email: this.state.email, password: this.state.password}
+    backend.post('auth/jwt/create/', formData)
+    .then(function (response) {
+      // handle success
+      AsyncStorage.setItem('access_token', response.data.access);
+      AsyncStorage.setItem('refresh_token', response.data.refresh);
+      this.props.navigation.navigate('App');
+    })
+      .catch(function (error) {
+        //handle error
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
+        // render error messages
+      });
+    
   };
+
 
   goToRegister = () => {
     this.props.navigation.navigate('Register');

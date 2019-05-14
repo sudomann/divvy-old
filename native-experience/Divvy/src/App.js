@@ -1,78 +1,43 @@
-/**
- * @format
- * @flow
- */
 <script src="http://localhost:8097"></script>
-import React, { Component } from 'react';
-import { Loading } from './components/common/';
-import Auth from './screens/Auth';
-import LoggedIn from './screens/LoggedIn';
-import deviceStorage from './services/deviceStorage.js';
-import { createStackNavigator, createAppContainer } from "react-navigation";
-import TabBar from "react-native-tab-bar-interaction";
+import React from 'react';
+import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
+import { AuthLoadingScreen } from './screens/AuthLoadingScreen';
+import { RegistrationScreen } from './screens/RegistrationScreen';
+import { SignInScreen } from './screens/SignInScreen';
+import { SignedInScreen } from './screens/SignedInScreen';
 
-class Landing extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      jwt: '',
-      loading: true
-    }
 
-    this.newJWT = this.newJWT.bind(this);
-    this.deleteJWT = deviceStorage.deleteJWT.bind(this);
-    this.loadJWT = deviceStorage.loadJWT.bind(this);
-    this.loadJWT();
-  }
-
-  newJWT(jwt) {
-    this.setState({
-      jwt: jwt
-    });
-  }
-
+export default class App extends React.Component {
   render() {
-    return (
-        <TabBar>
-          <TabBar.Item
-              icon={require('./tab1.png')}
-              selectedIcon={require('./tab1.png')}
-              title="Tab1"
-              screenBackgroundColor={{ backgroundColor: '#008080' }}
-          >
-            <View>
-                {/*Page Content*/}
-            </View>
-          </TabBar.Item>
-          <TabBar.Item
-              icon={require('./tab2.png')}
-              selectedIcon={require('./tab1.png')}
-              title="Tab2"
-              screenBackgroundColor={{ backgroundColor: '#F08080' }}
-          >
-              <View>
-                  {/*Page Content*/}
-              </View>
-          </TabBar.Item>
-          <TabBar.Item
-              icon={require('./tab3.png')}
-              selectedIcon={require('./tab1.png')}
-              title="Tab3"
-              screenBackgroundColor={{ backgroundColor: '#485d72' }}
-          >
-            <View>
-                {/*Page Content*/}
-            </View>
-          </TabBar.Item>
-        </TabBar>
-    );
+    return <AppContainer />;
   }
 }
 
-const AppNavigator = createStackNavigator({
-  Home: {
-    screen: Landing
-  }
+const AppStack = createStackNavigator({
+  Home: SignedInScreen
+},
+  {
+    headerMode: 'none',
+    defaultNavigationOptions: {
+      headerVisible: false,
+    }
+  });
+
+
+const AuthStack = createStackNavigator({
+  SignIn: SignInScreen,
+  Register: RegistrationScreen,
 });
 
-export default createAppContainer(AppNavigator);
+const AppNavigator = createSwitchNavigator({
+  AuthLoading: AuthLoadingScreen,
+  Auth: AuthStack,
+  App: AppStack,
+},
+  {
+    initialRouteName: 'AuthLoading',
+  }
+);
+
+const AppContainer = createAppContainer(AppNavigator);
+
