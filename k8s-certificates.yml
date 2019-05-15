@@ -9,18 +9,19 @@ spec:
     kind: ClusterIssuer
     # The cluster issuer created previously
     name: letsencrypt-staging
-  commonName: thedivvy.app
+  commonName: 'thedivvy.app'
   dnsNames:
+  - '*.thedivvy.app'
   - thedivvy.app
-  - www.thedivvy.app
   acme:
     config:
     - dns01:
         # The provider in the previously created issuer
         provider: clouddns-provider-staging
       domains:
+      - '*.thedivvy.app'
       - thedivvy.app
-      - www.thedivvy.app
+
 ---
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
@@ -33,15 +34,15 @@ spec:
     kind: ClusterIssuer
     # The cluster issuer created previously
     name: letsencrypt-prod
-  commonName: thedivvy.app
+  commonName: 'thedivvy.app'
   dnsNames:
+  - '*.thedivvy.app'
   - thedivvy.app
-  - www.thedivvy.app
   acme:
     config:
     - dns01:
         # The provider in the previously created issuer
         provider: clouddns-provider-prod
       domains:
+      - '*.thedivvy.app'
       - thedivvy.app
-      - www.thedivvy.app

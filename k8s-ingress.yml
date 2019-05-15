@@ -15,4 +15,5 @@ spec:
   tls:
   - hosts:
     - www.thedivvy.app
+    - thedivvy.app
     secretName: thedivvy-app-tls-prod

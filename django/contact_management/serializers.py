@@ -2,11 +2,15 @@ from rest_framework import serializers
 from contact_management.models import Contact
 
 
-class ContactSerializer(serializers.ModelSerializer):
+class ContactSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Contact
-        fields = ('first_name',
+        
+        fields = ('uuid',
+                  'first_name',
                   'last_name',
                   'email',
-                  'phone')
+                  'phone',)
+        
+        read_only_fields = ('uuid',)
