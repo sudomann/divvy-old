@@ -16,18 +16,18 @@ export class HistoryTabView extends Component {
 
   historyData = [
     {
-      title: "Heading 1",
-      description: "Description 1",
+      title: "Downtown Baltimore",
+      description: "May 20, 2019",
       image: require("../assets/img/scenery.jpg")
     },
     {
-      title: "Heading 2",
-      description: "Description 2",
+      title: "Silver Spring",
+      description: "May 15th, 2019",
       image: require("../assets/img/scenery.jpg")
     },
     {
-      title: "Heading 3",
-      description: "Description 3",
+      title: "Federick",
+      description: "May 16th, 2019",
       image: require("../assets/img/scenery.jpg")
     },
   ];
@@ -35,7 +35,6 @@ export class HistoryTabView extends Component {
   render() {
     return (
       <View style={styles.innerContainer}>
-        <Text>This is History Tab View</Text>
         <CardList data={this.historyData} />
       </View>
 

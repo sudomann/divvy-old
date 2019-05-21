@@ -5,6 +5,8 @@ import { AuthLoadingScreen } from './screens/AuthLoadingScreen';
 import { RegistrationScreen } from './screens/RegistrationScreen';
 import { SignInScreen } from './screens/SignInScreen';
 import { SignedInScreen } from './screens/SignedInScreen';
+import { CreateJourneyScreen } from './screens/CreateJourneyScreen';
+import { CreateRequestScreen } from './screens/CreateRequestScreen';
 
 
 export default class App extends React.Component {
@@ -14,7 +16,9 @@ export default class App extends React.Component {
 }
 
 const AppStack = createStackNavigator({
-  Home: SignedInScreen
+  Home: SignedInScreen,
+  CreateJourney: CreateJourneyScreen,
+  CreateRequest: CreateRequestScreen
 },
   {
     headerMode: 'none',

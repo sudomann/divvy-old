@@ -15,47 +15,62 @@ export class AccountTabView extends Component {
 
   pickerData = [
     {
-      value: "1",
-      label: "1"
+      value: "U",
+      label: "Choose not to disclose"
     },
     {
-      value: "2",
-      label: "2"
+      value: "F",
+      label: "Female"
     },
     {
-      value: "3",
-      label: "3"
-    }
+      value: "M",
+      label: "Male"
+    },
   ];
+
 
   formElements = [
     {
-      label: "Full Name",
+      label: "First Name",
       type: "text",
-      onChangeText: (value) => this.handleInputChange({ text: value }),
-      placeholder: "John Doe"
+      onChangeText: (value) => this.handleInputChange({ firstName: value }),
+      placeholder: "Jane"
+    },
+    {
+      label: "Last Name",
+      type: "text",
+      onChangeText: (value) => this.handleInputChange({ lastName: value }),
+      placeholder: "Doe"
+    },
+    {
+      label: "Phone",
+      type: "text",
+      onChangeText: (value) => this.handleInputChange({ phone: value }),
+      placeholder: "2024386648",
+      keyboardType: "phone-pad"
+    },
+    {
+      label: "Gender",
+      type: "picker",
+      onValueChange: (value) => this.handleInputChange({ gender: value }),
+      pickerData: this.pickerData
     },
     {
       label: "Email",
       type: "text",
-      onChangeText: (value) => this.handleInputChange({ text: value }),
-      placeholder: "john.doe@gmail.com",
-      isValid: (value) => this.checkInputValidity(value)
+      onChangeText: (value) => this.handleInputChange({ email: value }),
+      placeholder: "jdoe0@frostburg.edu",
+      keyboardType: "email-address"
     },
     {
-      label: "Type",
-      type: "picker",
-      onValueChange: (value) => this.handleInputChange({ someStateVar: value }),
-      pickerData: this.pickerData
-    },
-    {
-      label: "Address",
-      type: "textarea",
-      onChangeText: (value) => this.handleInputChange({ text: value })
+      label: "Password",
+      type: "text",
+      onChangeText: (value) => this.handleInputChange({ password: value }),
+      secureTextEntry: true
     },
   ];
 
- 
+
 
   contactList = [
     {
@@ -75,14 +90,25 @@ export class AccountTabView extends Component {
     },
   ];
 
+  vehicleList = [
+    {
+      title: "Chevy Volt",
+      description: "License Plate: 56HBL8",
+      image: require("../assets/img/scenery.jpg")
+    },
+  ];
+
 
 
   render() {
     return (
       <View style={styles.innerContainer}>
-        <Text>This is Acount Tab View</Text>
         <Form formElements={this.formElements} />
+        <Text> </Text>
+        <Text bold='true' size='h6' align='center' color='#663399'>Emergency Contacts</Text>
         <ListView data={this.contactList} />
+        <Text bold='true' size='h6' align='center' color='#663399' >My Vehicles</Text>
+        <ListView data={this.vehicleList} />
       </View>
     );
   }
