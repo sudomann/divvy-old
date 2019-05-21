@@ -6,7 +6,7 @@ from django.test.client import RequestFactory
 
 class ActivationView(TemplateView):
 
-    template_name = "users/activation.html"
+    template_name = "users/activated.html"
 
     def dispatch(self, request, *args, **kwargs):
         form_data = {

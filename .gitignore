@@ -446,3 +446,4 @@ lint/tmp/
 # lint/reports/
 
 # End of https://www.gitignore.io/api/node,django,reactnative
+collected_static/

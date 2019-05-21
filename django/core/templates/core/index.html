@@ -1,0 +1,24 @@
+{% extends "core/base_generic.html" %}
+{% load static from staticfiles %}
+
+{% block content %}
+<div class="container text-center">
+  <div class="row">
+    <div class="col-md-12">
+      <a class="hero-brand" href="" title="Home"><img alt="The Divvy App Logo" src="{% static "img/logo.png" %}"></a>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <h1>
+        The Divvy App
+      </h1>
+
+    <p class="tagline">
+      Don't make the long journey home alone.
+      Passengers cover gas, you just drive :)
+    </p>
+    <a class="btn btn-full" href="#">App Link Coming Soon</a>
+  </div>
+</div>
+{% endblock content%}

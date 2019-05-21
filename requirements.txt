@@ -3,9 +3,11 @@ django-background-tasks==1.2.0 # Celery is more production worthy
 django-extensions==2.1.6
 django-phonenumber-field==2.3.1
 django-sendgrid-v5==0.8.0
+django-storages[google]
 djangorestframework==3.9.2
 djangorestframework-simplejwt==4.1.5
 djoser==1.5.1
 gunicorn==19.9.0
 phonenumbers==8.10.9
 psycopg2==2.8.2
+raven==6.10.0

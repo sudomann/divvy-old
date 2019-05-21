@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 from datetime import timedelta
+from google.oauth2 import service_account
+import logging.config
+from django.utils.log import DEFAULT_LOGGING
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,10 +24,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'kq=@sxr2_^q7$3$iwdgp2=_@1)ca9ga&39u!xb8f#sc=snt%kh'
+SECRET_KEY = 'KEY REMOVED'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -40,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'raven.contrib.django.raven_compat',
+
     # Third-Party Apps
     'background_task',
     'djoser',
@@ -51,6 +56,7 @@ INSTALLED_APPS = [
     'api',
     'comment_thread',
     'contact_management',
+    'core',
     'domain_management',
     'live_tracker',
     'trip_calendar',
@@ -152,6 +158,25 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+#STATIC_ROOT = os.path.join(BASE_DIR, "../collected_static/")
+STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = 'thedivvy.app'
+GS_PROJECT_ID = 'divvy-project-238602'
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    os.path.join(BASE_DIR, "divvy-project-238602-b2e711ccc79c.json")
+) # TODO: Security flaw!!  get this sensitive keyfile outta here
+# UPDATE: keyfile destroyed, must generate new
+
+
+APPEND_SLASH = False # This should be True (as it usually is by default)
+                    # so as to prevent `/user` (not `/users/`) from 
+                    # revealing entire user list
+
 
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'US'
@@ -160,10 +185,14 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
 }
 
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT',),
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=1), #appears this is ignored by djoser
 }
 
 DJOSER = {
@@ -213,8 +242,76 @@ DJOSER = {
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 #SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"] 
 # TODO: move this key to a secure location when done testing!
-SENDGRID_API_KEY = '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'
+SENDGRID_API_KEY = 'KEYREMOVED'
 SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
 # for development purposes only; don't use in PROD
 SENDGRID_ECHO_TO_STDOUT = False
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Disable Django's logging setup
+LOGGING_CONFIG = None
+
+LOGLEVEL = os.environ.get('LOGLEVEL', 'info').upper()
+
+logging.config.dictConfig({
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'default': {
+            # exact format is not important, this is the minimum information
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+        },
+        'django.server': DEFAULT_LOGGING['formatters']['django.server'],
+    },
+    'handlers': {
+        # console logs to stderr
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'default',
+        },
+        # Add Handler for Sentry for `warning` and above
+        'sentry': {
+            'level': 'WARNING',
+            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+        },
+        'django.server': DEFAULT_LOGGING['handlers']['django.server'],
+    },
+    'loggers': {
+        # default for all undefined Python modules
+        '': {
+            'level': 'WARNING',
+            'handlers': ['console', 'sentry'],
+        },
+        # Our application code
+        'app': {
+            'level': LOGLEVEL,
+            'handlers': ['console', 'sentry'],
+            # Avoid double logging because of root logger
+            'propagate': False,
+        },
+        # Prevent noisy modules from logging to Sentry
+        'noisy_module': {
+            'level': 'ERROR',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        # Default runserver request logging
+        'django.server': DEFAULT_LOGGING['loggers']['django.server'],
+    },
+})
