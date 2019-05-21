@@ -16,8 +16,8 @@ import axios from 'axios';
 import { NavigationActions, StackActions } from 'react-navigation';
 
 const backend = axios.create({
-  //baseURL: 'https://thedivvy.app/api/',
-  baseURL: '192.168.1.144:8000/api/',
+  baseURL: 'https://thedivvy.app/api/',
+  //baseURL: '192.168.1.144:8000/api/',
   timeout: 1000
 });
 
@@ -83,14 +83,35 @@ export class SignedInScreen extends Component {
       icon: 'pin',
       name: 'bt_post',
       position: 1,
-      onPress: () => Alert.alert('Post Journey', 'Post a journey as a driver?')
+      onPress: () => Alert.alert(
+        'Post Journey',
+        'Post a journey as a driver?',
+        [ {
+          text: 'No',
+          style: 'cancel',
+        },
+          { text: 'Yes', onPress: () => this.props.navigation.navigate('CreateJourney') },
+        ],
+        { cancelable: true },
+      )
     },
     {
       text: 'Request Transport',
       icon: 'pin',
       name: 'bt_request',
       position: 2,
-      onPress: () => Alert.alert('Request Transport', 'Request a driver for a journey?')
+      onPress: () =>  Alert.alert(
+                        'Request Transport',
+                        'Request a driver for a journey?',
+                        [ {
+                          text: 'No',
+                          style: 'cancel',
+                        },
+                          { text: 'Yes', onPress: () => this.props.navigation.navigate('CreateRequest') },
+                        ],
+                        { cancelable: true },
+                      )
+      
     },
   ];
 

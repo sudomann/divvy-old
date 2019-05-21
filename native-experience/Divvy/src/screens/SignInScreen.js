@@ -12,8 +12,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios'
 
 const backend = axios.create({
-  //baseURL: 'https://thedivvy.app/api/auth/',
-  baseURL: 'http://192.168.0.144:8000/api/',
+  baseURL: 'https://thedivvy.app/api/',
+  //baseURL: 'http://192.168.0.144:8000/api/',
   timeout: 1000
 });
 

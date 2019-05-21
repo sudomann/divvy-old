@@ -12,8 +12,8 @@ import { CheckBox } from 'react-native-elements';
 import axios from 'axios';
 
 const backend = axios.create({
-  //baseURL: 'https://thedivvy.app/api/auth/',
-  baseURL: 'http://192.168.0.144:8000/api/auth/',
+  baseURL: 'https://thedivvy.app/api/',
+  //baseURL: 'http://192.168.0.144:8000/api/auth/',
   timeout: 1000
 });
 
@@ -54,7 +54,7 @@ export class RegistrationScreen extends React.Component {
       email: this.state.email,
       password: this.state.password
     }
-    backend.post('users/', formData)
+    backend.post('auth/users/', formData)
       .then((response) => {
         if (response.status == 201) {
           this.setState({ working: false })
@@ -130,7 +130,7 @@ export class RegistrationScreen extends React.Component {
           if ("password" in error.response.data) {
             this.setState({
               fieldErrors: [...this.state.fieldErrors,
-              'Password: '.concat(error.response.data.password.join("\n"))
+              error.response.data.password.join("\n")
               ]
             })
           }
