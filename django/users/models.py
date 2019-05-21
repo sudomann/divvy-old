@@ -25,9 +25,9 @@ class CustomUser(AbstractUser):
     MALE = 'M'
     UNSPECIFIED = 'U'
     GENDER_CHOICES = (
+        (UNSPECIFIED, 'Would rather not disclose'),
         (FEMALE, 'Female'),
-        (MALE, 'Male'),
-        (UNSPECIFIED, 'Would rather not disclose')
+        (MALE, 'Male')        
     )
 
     username = None
@@ -42,7 +42,6 @@ class CustomUser(AbstractUser):
     gender = models.CharField(
         max_length=1,
         choices=GENDER_CHOICES,
-        default=UNSPECIFIED
     )
     domain = models.ForeignKey(Domain, on_delete=models.PROTECT)
 

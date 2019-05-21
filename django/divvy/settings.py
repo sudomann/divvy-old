@@ -172,7 +172,9 @@ GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
 ) # TODO: Security flaw!!  get this sensitive keyfile outta here
 
 
-
+APPEND_SLASH = False # This should be True (as it usually is by default)
+                    # so as to prevent `/user` (not `/users/`) from 
+                    # revealing entire user list
 
 
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
