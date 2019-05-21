@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ScrollView, Alert, Image } from 'react-native';
+import { StyleSheet, View, ScrollView, Alert, Image, BackHandler } from 'react-native';
 import {
   Text, Icon, Button, Input, TextArea, Picker, DatePicker,
   FormDatePicker, FormInput, FormTextArea, FormPicker, Card, ListItem,
@@ -7,10 +7,13 @@ import {
   ListView, NavBarLeft, NavBar, NavBarBody, NavBarRight,
   NavBarButton, TabItem, TabBar, PillView
 } from "@99xt/first-born";
-import { HomeScreen } from './HomeScreen';
+import { HomeTabView } from '../views/HomeTabView';
+import { HistoryTabView } from '../views/HistoryTabView';
+import { AccountTabView } from '../views/AccountTabView';
 import MapView from 'react-native-maps';
 import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios'
+import axios from 'axios';
+import { NavigationActions, StackActions } from 'react-navigation';
 
 const backend = axios.create({
   //baseURL: 'https://thedivvy.app/api/',
@@ -23,16 +26,19 @@ export class SignedInScreen extends Component {
 
   constructor(props) {
     super(props);
-    /* this.state = {
-      text: "",
-      value: ""
-    } */
-  }
 
+  }
+  static navigationOptions = {
+    headerLeft: null,
+  };
   componentDidMount() {
     NotificationBarManager.registerMessageBar(this.refs.alert);
   }
-
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', function () {
+      return true
+    })
+  }
   componentWillUnmount() {
     NotificationBarManager.unregisterMessageBar();
   }
@@ -57,119 +63,50 @@ export class SignedInScreen extends Component {
     return regex.test(text);
   }
 
+
   signOut = () => {
     AsyncStorage.removeItem('access_token')
     AsyncStorage.removeItem('refresh_token')
-    this.props.navigation.popToTop();
+
+    //doesnt work
+    //this.props.navigation.dispatch(SwitchActions.jumpTo('Auth'));
+    this.props.navigation.dispatch(StackActions.reset({
+      index: 0,
+      key: null, // <-- is required, or it'll keep looking in currently active navigator
+      actions: [NavigationActions.navigate({ routeName: 'Auth' })],
+    }))
   }
 
   actions = [
     {
-      text: 'What\'s this?',
-      icon: 'help',
-      name: 'bt_accessibility',
-      position: 2,
-      onPress: () => Alert.alert('What\'s this?', 'You can post journeys using the the floating buttons')
-    },
-    {
       text: 'Post Journey',
       icon: 'pin',
-      name: 'bt_room',
+      name: 'bt_post',
       position: 1,
-      onPress: () => Alert.alert('Post Journey', 'Options will be added here to post as a driver/passenger')
-    }
-  ];
-
-  pickerData = [
-    {
-      value: "1",
-      label: "1"
+      onPress: () => Alert.alert('Post Journey', 'Post a journey as a driver?')
     },
     {
-      value: "2",
-      label: "2"
-    },
-    {
-      value: "3",
-      label: "3"
-    }
-  ];
-
-  formElements = [
-    {
-      label: "Full Name",
-      type: "text",
-      onChangeText: (value) => this.handleInputChange({ text: value }),
-      placeholder: "John Doe"
-    },
-    {
-      label: "Email",
-      type: "text",
-      onChangeText: (value) => this.handleInputChange({ text: value }),
-      placeholder: "john.doe@gmail.com",
-      isValid: (value) => this.checkInputValidity(value)
-    },
-    {
-      label: "Type",
-      type: "picker",
-      onValueChange: (value) => this.handleInputChange({ someStateVar: value }),
-      pickerData: this.pickerData
-    },
-    {
-      label: "Address",
-      type: "textarea",
-      onChangeText: (value) => this.handleInputChange({ text: value })
+      text: 'Request Transport',
+      icon: 'pin',
+      name: 'bt_request',
+      position: 2,
+      onPress: () => Alert.alert('Request Transport', 'Request a driver for a journey?')
     },
   ];
 
-  historyData = [
-    {
-      title: "Heading 1",
-      description: "Description 1",
-      image: require("../assets/img/scenery.jpg")
-    },
-    {
-      title: "Heading 2",
-      description: "Description 2",
-      image: require("../assets/img/scenery.jpg")
-    },
-    {
-      title: "Heading 3",
-      description: "Description 3",
-      image: require("../assets/img/scenery.jpg")
-    },
-  ];
 
-  contactList = [
-    {
-      title: "Aunt Mary",
-      description: "202-348-8964",
-      image: require("../assets/img/scenery.jpg")
-    },
-    {
-      title: "Eveline",
-      description: "240-536-4122",
-      image: require("../assets/img/scenery.jpg")
-    },
-    {
-      title: "Alex",
-      description: "301-478-9514",
-      image: require("../assets/img/scenery.jpg")
-    },
-  ];
+
 
   pillScenes = [
-    { scene: <HomeScreen /> },
-    { scene: <CardList data={this.historyData} /> },
-    { scene: <ListView data={this.contactList} /> },
-    { scene: <View style={styles.innerContainer}><Form formElements={this.formElements} /></View> },
+    { scene: <HomeTabView /> },
+    { scene: <HistoryTabView /> },
+    { scene: <AccountTabView /> },
   ];
 
   pillHeaders = [
     { title: 'Journey Board', icon: "map" },
     { title: 'History', icon: "history" },
-    { title: 'Emergency Contacts', icon: "alert" },
-    { title: 'Profile', icon: "profile" }
+    { title: 'Account', icon: "alert" },
   ];
 
   render() {
@@ -192,7 +129,7 @@ export class SignedInScreen extends Component {
           </NavBarBody>
           <NavBarRight>
             <NavBarButton onPress={this.signOut}>
-                <Text>Sign Out</Text>
+              <Text>Sign Out</Text>
             </NavBarButton>
           </NavBarRight>
         </NavBar>

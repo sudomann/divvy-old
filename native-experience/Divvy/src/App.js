@@ -29,13 +29,17 @@ const AuthStack = createStackNavigator({
   Register: RegistrationScreen,
 });
 
-const AppNavigator = createSwitchNavigator({
+const AppNavigator = createStackNavigator({
   AuthLoading: AuthLoadingScreen,
   Auth: AuthStack,
   App: AppStack,
 },
   {
     initialRouteName: 'AuthLoading',
+    headerMode: 'none',
+    defaultNavigationOptions: {
+      headerVisible: false,
+    }
   }
 );
 

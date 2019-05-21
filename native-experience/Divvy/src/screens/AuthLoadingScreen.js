@@ -4,9 +4,9 @@ import {
   StatusBar,
   View,
   Image,
-  Text,
   StyleSheet
 } from 'react-native';
+import { Text } from "@99xt/first-born";
 import AsyncStorage from '@react-native-community/async-storage';
 
 export class AuthLoadingScreen extends React.Component {
@@ -21,31 +21,40 @@ export class AuthLoadingScreen extends React.Component {
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(access_token ? 'App' : 'Auth');
-    //this.props.navigation.navigate('Auth');
+
+    setTimeout(() => {
+      this.props.navigation.navigate(access_token ? 'App' : 'Auth');
+      //this.props.navigation.navigate('App');
+    }, 2000);
   };
 
   // Render any loading content that you like here
   render() {
     return (
       <View style={styles.container}>
-      <View style={styles.innerContainer}>
-        <Text>Launching The Divvy App</Text>
-        <ActivityIndicator />
-        
-        <Image
-          style={{
-            alignSelf: 'center',
-            height: 597,
-            width: 301,
-            borderWidth: 1,
-            borderRadius: 75
-          }}
-          resizeMode="contain"
-          source={require('../assets/img/logo.png')}
-        ></Image>
-        <StatusBar barStyle="default" />
-      </View>
+        {/* <Text size='h5' align='center' color='#663399'>The Divvy App</Text> */}
+        <View style={styles.innerContainer}>
+
+          <StatusBar backgroundColor="purple" barStyle="light-content" />
+
+
+
+
+          <Image
+            style={{
+              alignSelf: 'center',
+              //height: 597,
+              width: 150,
+              borderWidth: 0,
+              //borderRadius: 100
+            }}
+            resizeMode="contain"
+            source={require('../assets/img/logo.png')}
+          ></Image>
+
+        </View>
+        <ActivityIndicator size='large' />
+        <Text size='h6' align='center' color='#663399'>Launching Awesomeness</Text>
       </View>
     );
   }
@@ -55,7 +64,7 @@ export class AuthLoadingScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     backgroundColor: '#F5FCFF',
     flexDirection: "column",
   },
