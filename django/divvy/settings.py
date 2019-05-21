@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'kq=@sxr2_^q7$3$iwdgp2=_@1)ca9ga&39u!xb8f#sc=snt%kh'
+SECRET_KEY = 'KEY REMOVED'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -170,6 +170,7 @@ GS_PROJECT_ID = 'divvy-project-238602'
 GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
     os.path.join(BASE_DIR, "divvy-project-238602-b2e711ccc79c.json")
 ) # TODO: Security flaw!!  get this sensitive keyfile outta here
+# UPDATE: keyfile destroyed, must generate new
 
 
 APPEND_SLASH = False # This should be True (as it usually is by default)
@@ -241,7 +242,7 @@ DJOSER = {
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 #SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"] 
 # TODO: move this key to a secure location when done testing!
-SENDGRID_API_KEY = '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'
+SENDGRID_API_KEY = 'KEYREMOVED'
 SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
 # for development purposes only; don't use in PROD
